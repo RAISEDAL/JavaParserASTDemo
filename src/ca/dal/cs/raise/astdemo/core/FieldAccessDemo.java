@@ -35,12 +35,35 @@ public class FieldAccessDemo {
 		return fieldAccess;
 	}
 
+	protected ArrayList<String> parseJDcomments() {
+		ArrayList<String> jdcomments = new ArrayList<>();
+		try {
+			CompilationUnit cu = JavaParser.parse(new File(this.fileURL));
+			FieldAccessVisitor visitor = new FieldAccessVisitor();
+			cu.accept(visitor, null);
+			jdcomments = visitor.javadocComments;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TokenMgrError err) {
+			err.printStackTrace();
+		}
+		return jdcomments;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String classAURL = "./src/ca/dal/cs/raise/astdemo/core/A.java";
+		String classAURL = "./src/ca/dal/cs/raise/astdemo/core/B.java";
 		FieldAccessDemo demo = new FieldAccessDemo(classAURL);
-		ArrayList<String> fAccess = demo.parseFieldAccess();
-		System.out.println(fAccess);
+		//ArrayList<String> fAccess = demo.parseFieldAccess();
+		//System.out.println(fAccess);
+		
+		ArrayList<String> jdcomments = demo.parseJDcomments();
+		System.out.println(jdcomments);
+		
 	}
 
 }

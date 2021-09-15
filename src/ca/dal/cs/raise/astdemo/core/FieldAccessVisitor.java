@@ -6,6 +6,8 @@ import java.util.List;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.comments.Comment;
+import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
@@ -16,10 +18,12 @@ public class FieldAccessVisitor extends VoidVisitorAdapter {
 
 	ArrayList<String> fieldAccess;
 	HashMap<String, String> fieldMap;
+	ArrayList<String> javadocComments;
 
 	public FieldAccessVisitor() {
 		this.fieldAccess = new ArrayList();
 		this.fieldMap = new HashMap<>();
+		this.javadocComments = new ArrayList<>();
 	}
 
 	@Override
@@ -52,6 +56,13 @@ public class FieldAccessVisitor extends VoidVisitorAdapter {
 		for (Statement stmt : stmts) {
 			stmt.accept(this, null);
 		}
+	}
+	
+
+	@Override
+	public void visit(JavadocComment jdComment, Object args) {
+		//System.out.println(jdComment.getContent());
+		this.javadocComments.add(jdComment.getContent());
 	}
 
 }

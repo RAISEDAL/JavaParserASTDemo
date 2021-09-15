@@ -11,10 +11,18 @@ public class A {
 		b = new B("John", 125);
 	}
 
+	/***
+	 * 
+	 * @return name
+	 */
 	public String getName() {
 		return b.name;
 	}
 
+	/***
+	 * 
+	 * @return roll
+	 */
 	public int getRoll() {
 		return b.roll;
 	}
